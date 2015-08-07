@@ -26,10 +26,16 @@ function deferredFunc(name){
 
 }
 
+/**  This is the final callback after all recursion is complete
+ *
+ */
 function allDone(notAborted, arr) {
     console.log("The recursive Async stuff is done, now u can proceed...");
 }
 
+/**
+ * Recursion function
+ */
 function recur(item, done){
 
     forEach(item.children, function(item, index, arr) {
@@ -52,8 +58,10 @@ function recur(item, done){
     }, done);
 }
 
+//Create a node from a children array so that it fits the recursion function
 var node0 = {name: "Level 0", children: treeJson};
 
+// Start the recursion, pass in the callback too!
 console.log("\nStart recursion:\n")
 recur(node0, allDone)
 
