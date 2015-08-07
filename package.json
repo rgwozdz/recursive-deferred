@@ -9,6 +9,7 @@
   "author": "spatialdev",
   "license": "ISC",
   "dependencies": {
+    "async-foreach": "^0.1.3",
     "q": "^1.4.1"
   }
 }

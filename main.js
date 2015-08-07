@@ -4,32 +4,8 @@
 
 var treeJson = require("./tree.json");
 var Q = require("q");
+var forEach = require('async-foreach').forEach;
 
-/**
- * A recursive function that is deferred
- */
-function recursive(nodeName, children){
-
-    var deferred = Q.defer();
-
-    deferredFunc(nodeName)
-        .then(function(response){
-            console.log(response);
-            deferred.resolve("All recursion is complete.")
-        })
-        .catch(function(err){
-            console.error(err);
-            deferred.reject("Recursion error.")
-        })
-        .done();
-
-    children.forEach(function(childNode){
-
-        recursive(childNode.name, childNode.children);
-    });
-
-    return deferred.promise;
-}
 
 /**
  *
@@ -39,27 +15,47 @@ function deferredFunc(name){
 
     var deferred = Q.defer();
 
+    console.log("Fire Async at level", name);
     var async = setTimeout(function(){
 
-        deferred.resolve(name + " has now returned")
+        deferred.resolve(name + " has now returned\n")
+
     }, 500);
 
     return deferred.promise;
 
 }
 
+function allDone(notAborted, arr) {
+    console.log("The recursive Async stuff is done, now u can proceed...");
+}
 
-// Execute the recursion.
-recursive("Level 0, Node 0", treeJson)
-    .then(function(response){
+function recur(item, done){
 
-        console.log(response);
+    forEach(item.children, function(item, index, arr) {
 
-        console.log("/A function dependent on the recursive deferred could be execute here.")
-    })
-    .catch(function(err){
-        console.error(err);
-    })
-    .done();
+        var itemDone = this.async();
+
+        deferredFunc(item.name)
+            .then(function(response){
+
+                console.log(response);
+                recur(item, itemDone)
+
+            })
+            .catch(function(err){
+                console.error(err);
+            })
+            .done()
+
+
+    }, done);
+}
+
+var node0 = {name: "Level 0", children: treeJson};
+
+console.log("\nStart recursion:\n")
+recur(node0, allDone)
+
 
 
