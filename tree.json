@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Level 1, Node 0",
+    "children": [
+      {
+        "name": "Level 2, Node 0",
+        "children": [
+          {
+            "name": "Level 3, Node 0",
+            "children":[]
+          },
+          {
+            "name": "Level 3, Node 1",
+            "children":[]
+          },
+          {
+            "name": "Level 3, Node 2",
+            "children":[]
+          }
+        ]
+      },
+      {
+        "name": "Level 2: Node 1",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Level 1, Node 1",
+    "children":[]
+  }
+]
